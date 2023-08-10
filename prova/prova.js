@@ -10,7 +10,7 @@ async function prova() {
         //SE SI PUO
 
         // Go to Google
-        await driver.get("https://www.google.com");
+        await driver.get("https://miniclip.com/");
 
         let button = await driver.findElement(By.id("L2AGLb"));
 
