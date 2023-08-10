@@ -44,6 +44,47 @@ async function prova() {
 
         console.log('numero totale di giochi:', totalFeaturedEntries);
 
+        // Go to /careers ROUTE
+        let careersLink = await driver.findElement(By.linkText('Careers'));
+        await careersLink.click();
+
+        // brute force it to win
+        let genoaSelect;
+        let retries = 0;
+        const provaSelect = 3;
+
+        //DOPO NEL FINALE PROVARE A FARE IL XPATH VARIABILE SO CHE IL USER POSSA CAMBIARLO IN UN FILE STERNO
+        while (retries < provaSelect) {
+            try {
+                genoaSelect = await driver.findElement(By.xpath('//option[text()="Genoa, Italy"]'));
+                await genoaSelect.click();
+                break;
+            } catch (error) {
+                console.log('provando.....');
+                retries++;
+                await driver.sleep(1000);
+            }
+        }
+
+        if (!genoaSelect) {
+            console.log('niente, nonce la opzione.');
+        } else {
+            console.log('Genoa Selezionato');
+        }
+
+        await driver.wait(until.titleContains("Vacancies"), 10000);
+
+        // trova truncate
+        let truncateElement = await driver.findElements(By.css('.truncate'));
+
+        let numberOfTruncate = truncateElement.length;
+
+        console.log('numeri di posizioni aperte a genova:', numberOfTruncate);
+
+
+
+
+
         //quanto tempo rimane aperto
         await new Promise(resolve => setTimeout(resolve, 5000));
     } catch (error) {
