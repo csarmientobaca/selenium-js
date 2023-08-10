@@ -12,32 +12,36 @@ async function prova() {
         // Go to Google
         await driver.get("https://miniclip.com/");
 
-        let button = await driver.findElement(By.id("L2AGLb"));
 
-        // Wait for the "Before we start" popup to appear
-        await driver.wait(async () => {
-            const element = await button.getAttribute("aria-hidden");
-            return element !== "true";
-        });
 
-        // per clickare il buttone "prima di iniziare" acetta tutto
-        await button.click();
 
-        // scrivere "hello, world"
-        await driver.findElement(By.name("q")).sendKeys("hello, world!");
 
-        // USANDO UNTIL per aspetare che sia usabile, o visibile
-        let searchButton = await driver.findElement(By.name("btnK"));
-        await driver.wait(until.elementIsEnabled(searchButton));
 
-        // // Scroll to the element to ensure it's in the viewport
-        // await driver.executeScript("arguments[0].scrollIntoView(true);", searchButton);
 
-        // clicka il button con JS
-        await driver.executeScript("arguments[0].click();", searchButton);
+        ////this is google practice
 
-        // //CLICK DIVERSO CHE NON FUNZIONA
-        // await searchButton.click()
+        // let button = await driver.findElement(By.id("L2AGLb"));
+
+        // // Wait for the "Before we start" popup to appear
+        // await driver.wait(async () => {
+        //     const element = await button.getAttribute("aria-hidden");
+        //     return element !== "true";
+        // });
+
+        // // per clickare il buttone "prima di iniziare" acetta tutto
+        // await button.click();
+
+        // // scrivere "hello, world"
+        // await driver.findElement(By.name("q")).sendKeys("hello, world!");
+
+        // // USANDO UNTIL per aspetare che sia usabile, o visibile
+        // let searchButton = await driver.findElement(By.name("btnK"));
+        // await driver.wait(until.elementIsEnabled(searchButton));
+
+        // // clicka il button con JS
+        // await driver.executeScript("arguments[0].click();", searchButton);
+
+
 
 
         // Wait for a specified amount of time (e.g., 20 seconds) before quitting
