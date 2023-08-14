@@ -138,7 +138,7 @@ async function prova() {
         console.log('numeri di posizioni aperte a genova:', numberOfTruncate);
 
         //quanto tempo rimane aperto
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise(resolve => setTimeout(resolve, 10000));
     } catch (error) {
         console.error("---->THIS IS AN ERROR <----:", error);
     } finally {
