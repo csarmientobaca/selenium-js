@@ -47,7 +47,7 @@ function assertLinkNotValid(link) {
 }
 
 // check the link if is valid
-const inputUrl = 'https://miniclip.com/games';
+const inputUrl = 'http://miniclip.com/games/genre-2/multiplayer/EN/#t-n-H';
 
 assertLinkNotValid(inputUrl)
     .then(() => {
