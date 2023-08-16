@@ -74,9 +74,9 @@ async function openAndCount() {
         }
 
         if (!genoaSelect) {
-            console.log('niente, nonce la opzione.');
+            console.log('Not found.');
         } else {
-            console.log('Genoa Selezionato');
+            console.log('Genoa Select');
         }
 
         await driver.wait(until.titleContains("Vacancies"), 10000);
