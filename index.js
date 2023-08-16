@@ -10,7 +10,7 @@ async function openAndCount() {
         // Go to miniclip
         await driver.get("https://miniclip.com/");
 
-        // Run script synchronously
+        // Run script /checklink/index.js synchronously
         const byeScript = spawnSync('node', ['./checklink/index.js'], { stdio: 'inherit' });
 
         if (byeScript.error) {
