@@ -10,16 +10,13 @@ function assertLinkNotValid(link) {
 
     return new Promise((resolve, reject) => {
         httpModule.get(link, (response) => {
-            // console.log("------response:", response);
             console.log(response.statusCode)
-            if (response.statusCode === 200 || 301) {
+            if (response.statusCode === 200) {
                 console.log("------response 200");
 
                 try {
                     const responseUrl = response.responseUrl || link;
-                    // console.log(link);
                     const responseParsedUrl = new URL(responseUrl);
-                    // console.log(responseParsedUrl);
 
                     if (response.headers['x-cache'] === 'Error from cloudfront') {
                         console.log('Link is invalid due to CloudFront error.');
@@ -36,7 +33,7 @@ function assertLinkNotValid(link) {
                     reject(error);
                 }
             } else {
-                console.log('not a valid response');  // Print when the link returns a non-200 nor 301 status code
+                console.log(inputUrl, 'is not valid');
                 resolve();  // Resolve for invalid link
             }
         }).on('error', (error) => {
@@ -81,7 +78,6 @@ async function prova() {
             let featuredEntryElements = await driver.findElements(By.css('.featured-entry'));
             let numberOfFeaturedEntries = featuredEntryElements.length;
             totalFeaturedEntries += numberOfFeaturedEntries;
-            console.log('Number of games inside loop:', totalFeaturedEntries);
 
             try {
                 let nextPageLink = await driver.findElement(By.xpath('//a[contains(text(), "Next Page")]'));
@@ -91,7 +87,6 @@ async function prova() {
                 await driver.wait(until.stalenessOf(nextPageLink));
             } catch (error) {
                 if (error.name === "NoSuchElementError") {
-                    console.log("---non ce piu: 'Next Page'---");
                     break;
                 } else {
                     throw error;
@@ -105,7 +100,6 @@ async function prova() {
         let careersLink = await driver.findElement(By.linkText('Careers'));
         await careersLink.click();
 
-        // brute force it to win
         let genoaSelect;
         let retries = 0;
         const maxRetries = 3;
@@ -116,7 +110,6 @@ async function prova() {
                 await genoaSelect.click();
                 break;
             } catch (error) {
-                console.log('provando.....');
                 retries++;
                 await driver.sleep(1000);
             }
@@ -137,7 +130,7 @@ async function prova() {
 
         console.log('numeri di posizioni aperte a genova:', numberOfTruncate);
 
-        //quanto tempo rimane aperto
+        //time it is open
         await new Promise(resolve => setTimeout(resolve, 10000));
     } catch (error) {
         console.error("---->THIS IS AN ERROR <----:", error);
