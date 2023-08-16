@@ -3,4 +3,4 @@
 
 2.-In terminal type: npm install
 
-4.-Run the script with: node index.js 
+3.-Run the script with: node index.js 
