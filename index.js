@@ -1,66 +1,24 @@
 const { By, Builder, Key, until } = require("selenium-webdriver");
+const { spawnSync } = require('child_process');
 require("chromedriver");
 
 
-const http = require('http');
-const https = require('https');
-
-function assertLinkNotValid(link) {
-    const httpModule = link.startsWith('https') ? require('https') : require('http');
-
-    return new Promise((resolve, reject) => {
-        httpModule.get(link, (response) => {
-            console.log(response.statusCode)
-            if (response.statusCode === 200) {
-                console.log("------response 200");
-
-                try {
-                    const responseUrl = response.responseUrl || link;
-                    const responseParsedUrl = new URL(responseUrl);
-
-                    if (response.headers['x-cache'] === 'Error from cloudfront') {
-                        console.log('Link is invalid due to CloudFront error.');
-                        reject(new Error('Link is not a valid route.'));
-                    } else if (responseParsedUrl.pathname === new URL(link).pathname) {
-                        console.log('Valid link => ', link);
-                        resolve();
-                    } else {
-                        console.log('Link redirects to another route. Not a valid route.');
-                        reject(new Error('Link is not a valid route.'));
-                    }
-                } catch (error) {
-                    console.error("Error creating URL instance:", error);
-                    reject(error);
-                }
-            } else {
-                console.log(inputUrl, 'is not valid');
-                resolve();  // Resolve for invalid link
-            }
-        }).on('error', (error) => {
-            console.log('Link is invalid.', error);  // Print when there's an error fetching the link
-            resolve();  // Resolve for invalid link
-        });
-    });
-}
-
-// check the link if is valid
-const inputUrl = 'http://miniclip.com/games/genre-2/multiplayer/EN/#t-n-H';
-
-assertLinkNotValid(inputUrl)
-    .then(() => {
-    })
-    .catch((error) => {
-        console.error('Assertion failed:', error.message);
-    });
-
-
-///second function
-async function prova() {
+async function openAndCount() {
     let driver = await new Builder().forBrowser("chrome").build();
 
     try {
         // Go to miniclip
         await driver.get("https://miniclip.com/");
+
+        // Run bye.js script synchronously
+        const byeScript = spawnSync('node', ['./checklink/index.js'], { stdio: 'inherit' });
+
+        if (byeScript.error) {
+            console.error('checklink encountered an error:', byeScript.error);
+        } else {
+            console.log('checklink finished successfully');
+        }
+
 
         // Find the <span> element with the text "Accept" and click on it
         let acceptButton = await driver.findElement(By.xpath('//span[text()="Accept"]'));
@@ -139,4 +97,4 @@ async function prova() {
     }
 }
 
-prova();
+openAndCount();
